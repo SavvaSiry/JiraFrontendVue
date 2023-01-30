@@ -35,7 +35,7 @@
                 variant="underlined"
               ></v-text-field>
 
-              <v-btn variant="outlined" type="submit" block class="mt-2" @click="logIn()">Submit</v-btn>
+              <v-btn variant="outlined" type="submit" block class="mt-2" @click="submit()">Submit</v-btn>
             </v-form>
           </v-sheet>
         </v-card>
@@ -48,6 +48,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
   data: () => ({
     overlay: false,
@@ -75,8 +77,12 @@ export default {
     ],
   }),
   methods: {
-    logIn() {
-
+    ...mapActions(['logIn']),
+    submit() {
+      this.logIn({
+        firstName: this.firstName,
+        lastName: this.lastName,
+      })
     }
   }
 }

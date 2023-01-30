@@ -1,9 +1,7 @@
 <template>
-  <HelloWorld />
-<!--  <Authorization />-->
+  <Authorization />
 </template>
 
 <script setup>
-  import HelloWorld from '@/components/HelloWorld.vue'
-  // import Authorization from "@/components/Authorization";
+  import Authorization from "@/components/Authorization";
 </script>

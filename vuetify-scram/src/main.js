@@ -6,8 +6,10 @@
 
 // Components
 import App from './App.vue'
+import axios from 'axios'
+import { store } from './store'
 
-// Composables
+// Composable
 import { createApp } from 'vue'
 
 // Plugins
@@ -17,4 +19,6 @@ const app = createApp(App)
 
 registerPlugins(app)
 
+app.use(store, axios)
 app.mount('#app')
+
