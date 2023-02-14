@@ -3,8 +3,8 @@ import axios from "axios";
 export default {
   actions: {
     logIn(ctx, user) {
-      ctx.commit('SAVE_LOADING', {name: 'username', status: true})
-      ctx.commit('SAVE_LOADING', {name: 'email', status: true})
+      ctx.commit('SAVE_REG_LOADING', {name: 'username', status: true})
+      ctx.commit('SAVE_REG_LOADING', {name: 'email', status: true})
       axios.post('http://localhost:8080/registration', {
           name: user.name,
           email: user.email,
@@ -12,66 +12,65 @@ export default {
         },
       )
         .then(function (response) {
-          ctx.commit('SAVE_ERROR', {name: 'username', status: false, errorMessage: undefined})
-          ctx.commit('SAVE_ERROR', {name: 'email', status: false, errorMessage: undefined})
+          ctx.commit('SAVE_REG_ERROR', {name: 'username', status: false, errorMessage: undefined})
+          ctx.commit('SAVE_REG_ERROR', {name: 'email', status: false, errorMessage: undefined})
         })
         .catch(function (error) {
             if (error.response.data.detail.toLowerCase().includes('name')) {
-              ctx.commit('SAVE_ERROR', {name: 'username', status: true, errorMessage: error.response.data.detail})
+              ctx.commit('SAVE_REG_ERROR', {name: 'username', status: true, errorMessage: error.response.data.detail})
             } else if (error.response.data.detail.toLowerCase().includes('email')) {
-              ctx.commit('SAVE_ERROR', {name: 'email', status: true, errorMessage: error.response.data.detail})
+              ctx.commit('SAVE_REG_ERROR', {name: 'email', status: true, errorMessage: error.response.data.detail})
             }
           }
         );
-      ctx.commit('SAVE_LOADING', {name: 'username', status: false})
-      ctx.commit('SAVE_LOADING', {name: 'email', status: false})
+      ctx.commit('SAVE_REG_LOADING', {name: 'username', status: false})
+      ctx.commit('SAVE_REG_LOADING', {name: 'email', status: false})
     },
-    validateUsername(ctx, username) {
-      ctx.commit('SAVE_LOADING', {name: 'username', status: true})
+
+    async validateUsername(ctx, username) {
+      ctx.commit('SAVE_REG_LOADING', {name: 'username', status: true})
       axios.post('http://localhost:8080/registration/validate/username', {
           name: username,
         },
       )
         .then(function (response) {
-          ctx.commit('SAVE_ERROR', {name: 'username', status: false, errorMessage: undefined})
+          ctx.commit('SAVE_REG_ERROR', {name: 'username', status: false, errorMessage: undefined})
         })
         .catch(function (error) {
-          ctx.commit('SAVE_ERROR', {name: 'username', status: true, errorMessage: error.response.data.detail})
+          ctx.commit('SAVE_REG_ERROR', {name: 'username', status: true, errorMessage: error.response.data.detail})
           }
         );
-      ctx.commit('SAVE_LOADING', {name: 'username', status: false})
+      ctx.commit('SAVE_REG_LOADING', {name: 'username', status: false})
     },
-    validateEmail(ctx, email) {
-      ctx.commit('SAVE_LOADING', {name: 'email', status: true})
+
+    async validateEmail(ctx, email) {
+      ctx.commit('SAVE_REG_LOADING', {name: 'email', status: true})
       axios.post('http://localhost:8080/registration/validate/email', {
           email: email,
         },
       )
         .then(function (response) {
-          ctx.commit('SAVE_ERROR', {name: 'email', status: false, errorMessage: undefined})
+          ctx.commit('SAVE_REG_ERROR', {name: 'email', status: false, errorMessage: undefined})
         })
         .catch(function (error) {
-            ctx.commit('SAVE_ERROR', {name: 'email', status: true, errorMessage: error.response.data.detail})
+            ctx.commit('SAVE_REG_ERROR', {name: 'email', status: true, errorMessage: error.response.data.detail})
           }
         );
-      ctx.commit('SAVE_LOADING', {name: 'email', status: false})
+      ctx.commit('SAVE_REG_LOADING', {name: 'email', status: false})
     }
+
   },
   mutations: {
-    SAVE_TOKENS(state, payload) {
-      state.users = users;
-
+    SAVE_REG_LOADING(state, payload) {
+      state.regStatus[payload.name].loading = payload.status;
     },
-    SAVE_LOADING(state, payload) {
-      state.status[payload.name].loading = payload.status;
-    },
-    SAVE_ERROR(state, payload) {
-      state.status[payload.name].error = payload.status;
-      state.status[payload.name].errorMessage = payload.errorMessage;
+    SAVE_REG_ERROR(state, payload) {
+      state.regStatus[payload.name].error = payload.status;
+      state.regStatus[payload.name].errorMessage = payload.errorMessage;
     },
   },
   state: {
-    status: {
+    regStatus: {
       username: {
         loading: false,
         error: false,
@@ -81,19 +80,20 @@ export default {
         loading: false,
         error: false,
         errorMessage: '',
-      }
-    },
-    jwtToken: {
-      refreshToken: '',
-      accessToken: '',
+      },
+      password: {
+        loading: false,
+        error: false,
+        errorMessage: '',
+      },
     },
   },
   getters: {
-    getUsernameStatus(state) {
-      return state.status.username
+    getRegUsernameStatus(state) {
+      return state.regStatus.username
     },
-    getEmailStatus(state) {
-      return state.status.email
-    }
+    getRegEmailStatus(state) {
+      return state.regStatus.email
+    },
   }
 }

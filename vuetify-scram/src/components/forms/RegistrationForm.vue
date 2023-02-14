@@ -6,8 +6,8 @@
         label="Name"
         :rules="nameRules"
         variant="underlined"
-        :loading="getUsernameStatus.loading"
-        :error-messages="getUsernameStatus.errorMessage"
+        :loading="getRegUsernameStatus.loading"
+        :error-messages="getRegUsernameStatus.errorMessage"
         @update:modelValue="checkUsername()"
       ></v-text-field>
 
@@ -17,8 +17,8 @@
         label="Email"
         :rules="emailRules"
         variant="underlined"
-        :loading="getEmailStatus.loading"
-        :error-messages="getEmailStatus.errorMessage"
+        :loading="getRegEmailStatus.loading"
+        :error-messages="getRegEmailStatus.errorMessage"
         @update:modelValue="checkEmail()"
       ></v-text-field>
 
@@ -82,7 +82,7 @@ export default {
     ],
   }),
   computed: {
-    ...mapGetters(['getUsernameStatus', 'getEmailStatus'])
+    ...mapGetters(['getRegEmailStatus', 'getRegUsernameStatus'])
   },
   methods: {
     ...mapActions(['logIn', 'validateUsername', 'validateEmail']),

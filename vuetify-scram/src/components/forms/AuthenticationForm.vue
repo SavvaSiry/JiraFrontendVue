@@ -7,6 +7,8 @@
         v-model="email"
         label="Email"
         variant="underlined"
+        :loading="getAuthEmailStatus.loading"
+        :error-messages="getAuthEmailStatus.errorMessage"
       ></v-text-field>
 
       <v-text-field
@@ -15,6 +17,8 @@
         label="Password"
         type="password"
         variant="underlined"
+        :loading="getAuthPasswordStatus.loading"
+        :error-messages="getAuthPasswordStatus.errorMessage"
       ></v-text-field>
 
       <v-btn variant="outlined" type="submit" block class="mt-2" @click="submit()">Войти</v-btn>
@@ -24,8 +28,23 @@
 </template>
 
 <script>
+import {mapActions, mapGetters} from 'vuex';
+
 export default {
-  name: "AuthenticationForm"
+  name: "AuthenticationForm",
+  data: () => ({
+    email: '',
+    password: '',
+  }),
+  computed: {
+    ...mapGetters(['getAuthEmailStatus', 'getAuthPasswordStatus'])
+  },
+  methods: {
+    ...mapActions(['authenticate']),
+    async submit() {
+      await this.authenticate({email: this.email, password: this.password})
+    }
+  }
 }
 </script>
 
