@@ -8,9 +8,9 @@
 
       <v-overlay class="align-center d-flex flex-row justify-center" v-model="overlay">
 
-        <SignUpCard
-         @close="overlay = false"
-        />
+      <AuthRegistrCard
+        @close="overlay = false"
+      />
 
       </v-overlay>
 
@@ -20,11 +20,9 @@
 </template>
 
 <script>
-import SignUpCard from "@/components/SignUpCard";
-
+import AuthRegistrCard from "@/components/AuthRegistrCard";
 export default {
-  components: {SignUpCard},
-
+  components: {AuthRegistrCard},
   data: () => ({
     overlay: false,
   })
