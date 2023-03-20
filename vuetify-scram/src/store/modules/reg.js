@@ -1,11 +1,13 @@
 import axios from "axios";
 
+const BASE_URL = '';
+
 export default {
   actions: {
-    logIn(ctx, user) {
+    signUp(ctx, user) {
       ctx.commit('SAVE_REG_LOADING', {name: 'username', status: true})
       ctx.commit('SAVE_REG_LOADING', {name: 'email', status: true})
-      axios.post('http://localhost:8080/registration', {
+      axios.post(BASE_URL + '/v1/signUp', {
           name: user.name,
           email: user.email,
           password: user.password,
@@ -29,7 +31,7 @@ export default {
 
     async validateUsername(ctx, username) {
       ctx.commit('SAVE_REG_LOADING', {name: 'username', status: true})
-      axios.post('http://localhost:8080/registration/validate/username', {
+      axios.post(BASE_URL + '/validate/username', {
           name: username,
         },
       )
@@ -45,7 +47,7 @@ export default {
 
     async validateEmail(ctx, email) {
       ctx.commit('SAVE_REG_LOADING', {name: 'email', status: true})
-      axios.post('http://localhost:8080/registration/validate/email', {
+      axios.post(BASE_URL + '/validate/email', {
           email: email,
         },
       )

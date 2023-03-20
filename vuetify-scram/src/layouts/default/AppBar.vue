@@ -1,7 +1,6 @@
 <template>
-  <v-app-bar :elevation="1" rounded>
-    <v-app-bar-nav-icon/>
-    <v-app-bar-title>Hi there!</v-app-bar-title>
+  <v-app-bar :elevation="0" style="border-bottom: 1px solid #c3bebe">
+    <v-app-bar-title><b>NotScram</b></v-app-bar-title>
     <template v-slot:append>
 
       <v-btn icon="mdi-login" @click="overlay = !overlay"></v-btn>

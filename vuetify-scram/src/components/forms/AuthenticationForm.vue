@@ -21,6 +21,8 @@
         :error-messages="getAuthPasswordStatus.errorMessage"
       ></v-text-field>
 
+      <v-btn  variant="outlined" type="submit" block class="mt-2" @click="getYa()">Yandex ID</v-btn>
+
       <v-btn variant="outlined" type="submit" block class="mt-2" @click="submit()">Войти</v-btn>
 
     </v-form>
@@ -40,7 +42,7 @@ export default {
     ...mapGetters(['getAuthEmailStatus', 'getAuthPasswordStatus'])
   },
   methods: {
-    ...mapActions(['authenticate']),
+    ...mapActions(['authenticate', 'getYa']),
     async submit() {
       await this.authenticate({email: this.email, password: this.password})
     }

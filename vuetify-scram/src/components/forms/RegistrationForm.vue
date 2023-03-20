@@ -60,7 +60,7 @@ export default {
     ],
     password: '',
     repeatPassword: '',
-    repeatPasswordErrorMessage: 'Password mismatch',
+    repeatPasswordErrorMessage: '',
     passwordRules: [
       value => {
         if (value?.length > 8) return true
@@ -74,21 +74,15 @@ export default {
         return 'Email is incorrect.'
       }
     ],
-    items: [
-      {title: 'Click Me'},
-      {title: 'Click Me'},
-      {title: 'Click Me'},
-      {title: 'Click Me 2'},
-    ],
   }),
   computed: {
     ...mapGetters(['getRegEmailStatus', 'getRegUsernameStatus'])
   },
   methods: {
-    ...mapActions(['logIn', 'validateUsername', 'validateEmail']),
+    ...mapActions(['signUp', 'validateUsername', 'validateEmail']),
     async submit() {
       const {valid} = await this.$refs.form.validate()
-      if (valid) this.logIn({name: this.name, email: this.email, password: this.password})
+      if (valid) this.signUp({name: this.name, email: this.email, password: this.password})
     },
     checkUsername() {
       if (this.name?.length > 3 && /[^0-9]/.test(this.name))
