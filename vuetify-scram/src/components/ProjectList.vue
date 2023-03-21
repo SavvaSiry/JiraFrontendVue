@@ -1,6 +1,6 @@
 <template>
   <v-layout>
-    <v-container class="bg-surface-variant">
+    <v-container>
       <v-row no-gutters>
         <v-col
           v-for="project in getProjects"

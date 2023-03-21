@@ -48,7 +48,14 @@ const routes = [
   },
   {
     path: '/projects',
-    component: ProjectList
+    component: () => import('@/layouts/default/Default.vue'),
+    children: [
+      {
+        path: '',
+        props: true,
+        component: () => import(/* webpackChunkName: "home" */ '@/components/ProjectList.vue')
+      }
+    ]
   },
   {
     path: '/projects/:id',

@@ -9,6 +9,7 @@
     :card-title="'Редактирование задачи'"
     :description="task.description"
     :title="task.title"
+    :task="task"
     @closeOverlay="overlay = false"
   />
 </template>

@@ -24,7 +24,7 @@
             placeholder="Describe the task here"
           />
 
-          <v-btn variant="outlined" type="submit" block class="mt-2" @click="createTask()">{{ buttonTitle }}</v-btn>
+          <v-btn variant="outlined" type="submit" block class="mt-2" @click="submit()">{{ buttonTitle }}</v-btn>
         </v-form>
       </v-card-text>
     </v-card>
@@ -43,6 +43,7 @@ export default {
     }
   },
   props: {
+    task: {},
     title: {
       type: String,
       default: ''
@@ -65,10 +66,26 @@ export default {
     this.editDescription = this.description
   },
   methods: {
+    submit() {
+      if (this.task !== undefined) this.updateTask()
+      else this.createTask()
+      this.cleanForm()
+    },
+    updateTask() {
+      let data = {
+        id: this.task.id,
+        title: this.editTitle,
+        description: this.editDescription,
+        deadline: this.task.deadline.toString(),
+        status: this.task.status,
+        users: this.task.users,
+        project_id: this.$route.params.id
+      }
+      store.dispatch('updateTask', data)
+    },
     createTask() {
       let data = {id: this.$route.params.id, name: this.editTitle, description: this.editDescription}
       store.dispatch('createTask', data)
-      this.cleanForm()
     },
     cleanForm() {
       this.editTitle = ''

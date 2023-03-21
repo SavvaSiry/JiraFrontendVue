@@ -25,6 +25,23 @@ export default {
           console.log((response.data))
           ctx.dispatch('getTasks', data.id)
         })
+    },
+    updateTask(ctx, data) {
+      let client = getClient()
+      client.put('/tasks/' + data.id,
+        {
+          title: data.title,
+          description: data.description,
+          deadline: data.deadline,
+          status: data.status,
+          users: data.users,
+          project_id: data.project_id
+        })
+        .then(r => {
+          console.log(r)
+          ctx.dispatch('getTasks', data.project_id)
+        })
+        .catch(ex => console.log(ex))
     }
   },
   mutations: {
