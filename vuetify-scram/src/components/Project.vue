@@ -1,8 +1,11 @@
 <template>
   <v-card
-    class="ma-2 pa-2"
+    class="ma-2 pa-2 d-flex flex-column"
     :loading="false"
     variant="outlined"
+    min-height="250"
+    max-height="250"
+
   >
     <div class="d-flex align-center justify-space-between">
       <v-card-title>{{ project.title }}</v-card-title>
@@ -10,7 +13,7 @@
         Delete
       </v-btn>
     </div>
-    <v-card-text>{{ project.description }}</v-card-text>
+    <v-card-text class="flex-fill">{{ project.description }}</v-card-text>
     <v-card-actions>
       <v-btn @click="seeProject(project)">Go to tasks</v-btn>
     </v-card-actions>

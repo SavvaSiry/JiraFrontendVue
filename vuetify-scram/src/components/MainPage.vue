@@ -5,12 +5,12 @@
       <div class="my-grid">
         <div class="my-colum">
           <v-card-title class="pa-0 text-center">TO DO</v-card-title>
-
-          <Task
-            v-for="task in getTasks"
-            :task="task"
-          />
-
+          <div class="my-task-container mt-5">
+            <Task
+              v-for="task in getTasks"
+              :task="task"
+            />
+          </div>
           <v-btn variant="outlined" type="submit" block class="mt-2" @click="overlay = !overlay">Создать</v-btn>
         </div>
         <div class="my-colum">
@@ -111,6 +111,12 @@ export default {
   padding: 15px;
 
   border-right: 1px solid black;
+}
+
+.my-task-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .my-last-column {
