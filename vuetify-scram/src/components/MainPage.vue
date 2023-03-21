@@ -1,56 +1,34 @@
 <template>
-  <v-card>
-    <v-layout>
-      <v-navigation-drawer
-        expand-on-hover
-        rail
-      >
-        <v-list>
-          <v-list-item
-            :prepend-avatar="'https://avatars.mds.yandex.net/get-yapic/' + getInfo.avatarId + '/islands-200'"
-            :title="getInfo.user_name"
-            :subtitle="getInfo.email"
-          ></v-list-item>
-        </v-list>
+  <navigation-default/>
+  <v-layout class="h-100">
+    <v-main>
+      <div class="my-grid">
+        <div class="my-colum">
+          <v-card-title class="pa-0 text-center">TO DO</v-card-title>
 
-        <v-divider></v-divider>
+          <Task
+            v-for="task in getTasks"
+            :task="task"
+          />
 
-        <v-list density="compact" nav>
-          <v-list-item prepend-icon="mdi-folder" title="My Files" value="myfiles"></v-list-item>
-          <v-list-item prepend-icon="mdi-account-multiple" title="Shared with me" value="shared"></v-list-item>
-          <v-list-item prepend-icon="mdi-star" title="Starred" value="starred"></v-list-item>
-        </v-list>
-      </v-navigation-drawer>
-
-      <v-main style="height: 95vh">
-        <div class="my-grid">
-          <div class="my-colum">
-            <v-card-title class="pa-0 text-center">TO DO</v-card-title>
-
-            <Task
-              v-for="task in getTasks"
-              :task="task"
-            />
-
-            <v-btn variant="outlined" type="submit" block class="mt-2" @click="overlay = !overlay">Создать</v-btn>
-          </div>
-          <div class="my-colum">
-            <v-card-title class="pa-0 text-center">IN PROGRESS</v-card-title>
-          </div>
-          <div class="my-colum">
-            <v-card-title class="pa-0 text-center">VERIFY</v-card-title>
-          </div>
-          <div class="my-colum my-last-column">
-            <v-card-title class="pa-0 text-center">DONE</v-card-title>
-          </div>
+          <v-btn variant="outlined" type="submit" block class="mt-2" @click="overlay = !overlay">Создать</v-btn>
         </div>
-      </v-main>
-      <CreateTask
-        v-model="overlay"
-        @closeOverlay="overlay = false"
-      />
-    </v-layout>
-  </v-card>
+        <div class="my-colum">
+          <v-card-title class="pa-0 text-center">IN PROGRESS</v-card-title>
+        </div>
+        <div class="my-colum">
+          <v-card-title class="pa-0 text-center">VERIFY</v-card-title>
+        </div>
+        <div class="my-colum my-last-column">
+          <v-card-title class="pa-0 text-center">DONE</v-card-title>
+        </div>
+      </div>
+    </v-main>
+    <CreateTask
+      v-model="overlay"
+      @closeOverlay="overlay = false"
+    />
+  </v-layout>
 </template>
 
 <script>
@@ -59,10 +37,11 @@ import CreateTask from "@/components/CreateTask";
 import {store} from "@/store";
 import Task from "@/components/Task";
 import draggable from "vuedraggable";
+import NavigationDefault from "@/layouts/default/NavigationBar";
 
 export default {
   name: "MainPage",
-  components: {Task, CreateTask, draggable},
+  components: {NavigationDefault, Task, CreateTask, draggable},
   data() {
     return {
       overlay: false,
@@ -86,9 +65,9 @@ export default {
     //   get() {
     //     return this.getTasks
     //   },
-      // set(value) {
-      //   this.$store.commit('updateList', value)
-      // }
+    // set(value) {
+    //   this.$store.commit('updateList', value)
+    // }
     // }
   },
   async mounted() {
