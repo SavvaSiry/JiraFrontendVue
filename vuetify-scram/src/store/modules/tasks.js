@@ -16,7 +16,7 @@ export default {
       client.post('/tasks', {
         deadline: "1679336656",
         description: data.description,
-        project_id: data.id,
+        project_id: data.project_id,
         status: "TO DO",
         title: data.name,
         users: []
@@ -42,12 +42,20 @@ export default {
           ctx.dispatch('getTasks', data.project_id)
         })
         .catch(ex => console.log(ex))
+    },
+    deleteTask(ctx, data) {
+      let client = getClient()
+      client.delete('/tasks/' + data.task_id)
+        .then(r => {
+          console.log(r.data)
+          ctx.dispatch('getTasks', data.project_id)
+        })
     }
   },
   mutations: {
     updateTasks(state, payload) {
       state.tasks = payload
-    }
+    },
   },
   state: {
     tasks: []

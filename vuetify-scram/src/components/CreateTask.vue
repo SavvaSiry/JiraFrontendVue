@@ -7,7 +7,12 @@
       min-width="400"
     >
 
-      <v-card-title>{{ cardTitle }}</v-card-title>
+      <div class="d-flex align-center justify-space-between">
+        <v-card-title>{{ cardTitle }}</v-card-title>
+        <v-btn v-if="task !== undefined" prepend-icon="mdi-delete" variant="text" @click="deleteTask()">
+        </v-btn>
+      </div>
+
       <v-card-text>
         <v-form ref="form" @submit.prevent>
           <v-text-field
@@ -84,13 +89,18 @@ export default {
       store.dispatch('updateTask', data)
     },
     createTask() {
-      let data = {id: this.$route.params.id, name: this.editTitle, description: this.editDescription}
+      let data = {project_id: this.$route.params.id, name: this.editTitle, description: this.editDescription}
       store.dispatch('createTask', data)
     },
     cleanForm() {
       this.editTitle = ''
       this.editDescription = ''
       this.$emit('closeOverlay')
+    },
+    deleteTask() {
+      let data = {task_id: this.task.id, project_id: this.$route.params.id}
+      store.dispatch('deleteTask', data)
+      this.cleanForm()
     }
   }
 }
