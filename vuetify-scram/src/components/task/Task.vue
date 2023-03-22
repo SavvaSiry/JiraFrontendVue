@@ -1,17 +1,19 @@
 <template>
-  <v-card @click="overlay = true">
-    <v-card-title>{{ task.title }}</v-card-title>
-    <v-card-text>{{ task.description }}</v-card-text>
-  </v-card>
-  <CreateTask
-    v-model="overlay"
-    :button-title="'Внести изменения'"
-    :card-title="'Редактирование задачи'"
-    :description="task.description"
-    :title="task.title"
-    :task="task"
-    @closeOverlay="overlay = false"
-  />
+  <div>
+    <v-card @click="overlay = true">
+      <v-card-title>{{ task.title }}</v-card-title>
+      <v-card-text>{{ task.description }}</v-card-text>
+    </v-card>
+    <CreateTask
+      v-model="overlay"
+      :button-title="'Внести изменения'"
+      :card-title="'Редактирование задачи'"
+      :description="task.description"
+      :title="task.title"
+      :task="task"
+      @closeOverlay="overlay = false"
+    />
+  </div>
 </template>
 
 <script>

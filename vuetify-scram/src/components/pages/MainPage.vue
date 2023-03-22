@@ -5,35 +5,79 @@
       <div class="my-grid">
         <div class="my-colum">
           <v-card-title class="pa-0 text-center">TO DO</v-card-title>
-          <div class="my-task-container mt-5">
 
-            <draggable
-              v-model='getTasks'
-              :item-key="id"
-            >
-              <template #item="{element}">
-                <Task
-                  :task="element"
-                />
-              </template>
-            </draggable>
+          <draggable
+            class="my-task-container mt-5"
+            v-model='myList.todo'
+            item-key="id"
+            @change="todo"
+            group="tasks"
+            @add="changeStatus"
+          >
+            <template #item="{element}">
+              <Task
+                :task="element"
+              />
+            </template>
+          </draggable>
 
-
-            <!--              <Task-->
-            <!--                v-for="task in getTasks"-->
-            <!--                :task="task"-->
-            <!--              />-->
-          </div>
           <v-btn variant="outlined" type="submit" block class="mt-2" @click="overlay = !overlay">Создать</v-btn>
         </div>
         <div class="my-colum">
           <v-card-title class="pa-0 text-center">IN PROGRESS</v-card-title>
+
+          <draggable
+            class="my-task-container mt-5"
+            v-model='myList.inProgress'
+            item-key="id"
+            group="tasks"
+            @change="inProgress"
+          >
+            <template #item="{element}">
+              <Task
+                :task="element"
+              />
+            </template>
+          </draggable>
+
         </div>
         <div class="my-colum">
           <v-card-title class="pa-0 text-center">VERIFY</v-card-title>
+
+          <draggable
+            class="my-task-container mt-5"
+            v-model='myList.verify'
+            item-key="id"
+            @change="verify"
+            group="tasks"
+            @add="changeStatus"
+          >
+            <template #item="{element}">
+              <Task
+                :task="element"
+              />
+            </template>
+          </draggable>
+
         </div>
         <div class="my-colum my-last-column">
           <v-card-title class="pa-0 text-center">DONE</v-card-title>
+
+          <draggable
+            class="my-task-container mt-5"
+            v-model='myList.done'
+            item-key="id"
+            @change="done"
+            group="tasks"
+            @add="changeStatus"
+          >
+            <template #item="{element}">
+              <Task
+                :task="element"
+              />
+            </template>
+          </draggable>
+
         </div>
       </div>
     </v-main>
@@ -59,48 +103,40 @@ export default {
     return {
       overlay: false,
       drag: false,
-      // list1: [
-      //   { name: "John", id: 1 },
-      //   { name: "Joao", id: 2 },
-      //   { name: "Jean", id: 3 },
-      //   { name: "Gerard", id: 4 }
-      // ],
-      // list2: [
-      //   { name: "Juan", id: 5 },
-      //   { name: "Edgard", id: 6 },
-      //   { name: "Johnson", id: 7 }
-      // ]
     }
   },
   computed: {
     ...mapGetters(['getInfo', 'getTasks']),
-    // myList: {
-    //   get() {
-    //     return this.getTasks
-    //   },
-    // set(value) {
-    //   this.$store.commit('updateList', value)
-    // }
-    // }
+    myList: {
+      get() {
+        return this.getTasks
+      },
+      set(value) {
+        console.log('SET DATA')
+        this.$store.commit('updateTasks', value)
+      },
+    }
   },
   async mounted() {
     await store.dispatch('getTasks', this.$route.params.id)
   },
   methods: {
-    // add: function() {
-    //   this.list.push({ name: "Juan" });
-    // },
-    // replace: function() {
-    //   this.list = [{ name: "Edgard" }];
-    // },
-    // clone: function(el) {
-    //   return {
-    //     name: el.title + " cloned"
-    //   };
-    // },
-    // log: function(evt) {
-    //   window.console.log(evt);
-    // }
+    todo: function (evt) {
+      if (evt.added) this.changeStatus(evt.added.element, 'TO DO')
+    },
+    inProgress: function (evt) {
+      if (evt.added) this.changeStatus(evt.added.element, 'IN PROGRESS')
+    },
+    verify: function (evt) {
+      if (evt.added) this.changeStatus(evt.added.element, 'VERIFY')
+    },
+    done: function (evt) {
+      if (evt.added) this.changeStatus(evt.added.element, 'DONE')
+    },
+    changeStatus(element, status) {
+      element.status = status
+      store.dispatch('updateTask', element)
+    }
   }
 }
 </script>

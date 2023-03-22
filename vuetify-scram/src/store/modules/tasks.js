@@ -17,9 +17,10 @@ export default {
         deadline: "1679336656",
         description: data.description,
         project_id: data.project_id,
+        number: ctx.state.tasks.length,
         status: "TO DO",
         title: data.name,
-        users: []
+        users: [],
       })
         .then(function (response) {
           console.log((response.data))
@@ -35,7 +36,8 @@ export default {
           deadline: data.deadline,
           status: data.status,
           users: data.users,
-          project_id: data.project_id
+          project_id: data.project_id,
+          number: data.number
         })
         .then(r => {
           console.log(r)
@@ -54,11 +56,19 @@ export default {
   },
   mutations: {
     updateTasks(state, payload) {
-      state.tasks = payload
+      state.tasks.todo = payload.filter((task) => task.status === 'TO DO')
+      state.tasks.inProgress = payload.filter((task) => task.status === 'IN PROGRESS')
+      state.tasks.verify = payload.filter((task) => task.status === 'VERIFY')
+      state.tasks.done = payload.filter((task) => task.status === 'DONE')
     },
   },
   state: {
-    tasks: []
+    tasks: {
+      todo: [],
+      inProgress: [],
+      verify: [],
+      done: []
+    }
   },
   getters: {
     getTasks(state) {

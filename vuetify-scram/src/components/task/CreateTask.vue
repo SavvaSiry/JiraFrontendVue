@@ -89,7 +89,7 @@ export default {
       store.dispatch('updateTask', data)
     },
     createTask() {
-      let data = {project_id: this.$route.params.id, name: this.editTitle, description: this.editDescription}
+      let data = {project_id: this.$route.params.id, name: this.editTitle, description: this.editDescription, number: store.state.tasks.length}
       store.dispatch('createTask', data)
     },
     cleanForm() {
