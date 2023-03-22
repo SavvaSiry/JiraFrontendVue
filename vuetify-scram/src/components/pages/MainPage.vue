@@ -6,10 +6,23 @@
         <div class="my-colum">
           <v-card-title class="pa-0 text-center">TO DO</v-card-title>
           <div class="my-task-container mt-5">
-            <Task
-              v-for="task in getTasks"
-              :task="task"
-            />
+
+            <draggable
+              v-model='getTasks'
+              :item-key="id"
+            >
+              <template #item="{element}">
+                <Task
+                  :task="element"
+                />
+              </template>
+            </draggable>
+
+
+            <!--              <Task-->
+            <!--                v-for="task in getTasks"-->
+            <!--                :task="task"-->
+            <!--              />-->
           </div>
           <v-btn variant="outlined" type="submit" block class="mt-2" @click="overlay = !overlay">Создать</v-btn>
         </div>

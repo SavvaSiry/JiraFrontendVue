@@ -1,4 +1,5 @@
 <template>
+
   <v-overlay class="align-center d-flex flex-row justify-center">
 
     <v-card
@@ -10,12 +11,14 @@
       <v-card-title>Создать проект</v-card-title>
       <v-card-text>
         <project-form
-          @submit="createProject"
-          :button-title="'Создать'"
+          @submit="editProject"
+          :button-title="'Изменить проект'"
+          :project="project"
         />
       </v-card-text>
     </v-card>
   </v-overlay>
+
 </template>
 
 <script>
@@ -23,12 +26,17 @@ import ProjectForm from "@/components/project/ProjectForm";
 import {store} from "@/store";
 
 export default {
-  name: "CreateProject",
+  name: "EditProject",
   components: {ProjectForm},
+  props: {
+    project: {
+      required: true
+    }
+  },
   methods: {
-    createProject(project) {
-      store.dispatch('createProject', project)
-      this.$emit('overlayClose')
+    editProject(project) {
+      store.dispatch('editProject', project)
+      this.$emit('closeOverlay')
     }
   }
 }

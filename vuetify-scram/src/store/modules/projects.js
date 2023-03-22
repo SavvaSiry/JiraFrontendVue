@@ -17,12 +17,35 @@ export default {
           console.log(r.data)
           ctx.dispatch('getProjectList')
         })
+    },
+    createProject(ctx, project) {
+      let client = getClient()
+      client.post('/project',
+        {
+          title: project.title,
+          description: project.description
+        })
+        .then(r => {
+          console.log(r.data)
+          ctx.dispatch('getProjectList')
+        })
+    },
+    editProject(ctx, project) {
+      let client = getClient()
+      client.put('/project/' + project.id, {
+        title: project.title,
+        description: project.description
+      })
+        .then(r => {
+          console.log(r.data)
+          ctx.dispatch('getProjectList')
+        })
     }
   },
   mutations: {
     setProjects(state, payload) {
       state.projects = payload
-    }
+    },
   },
   state: {
     projects: []

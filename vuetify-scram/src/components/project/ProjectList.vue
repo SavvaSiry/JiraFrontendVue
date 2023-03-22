@@ -4,14 +4,19 @@
     <v-container>
       <v-row no-gutters>
         <v-col
-          v-for="project in getProjects"
-          :key="project.id"
           cols="12"
           sm="4"
         >
-          <v-btn style="width: 95%" class="d-flex align-center justify-center ma-2 pa-2" variant="outlined" min-height="250"
-                 max-height="250">
+          <v-btn style="width: 95%" class="d-flex align-center justify-center ma-2 pa-2" variant="outlined"
+                 min-height="250"
+                 max-height="250"
+                 @click="overlay = true"
+          >
             <v-icon icon="mdi-plus" size="x-large"/>
+            <CreateProject
+              v-model="overlay"
+              @overlayClose="overlay = false"
+            />
           </v-btn>
         </v-col>
         <v-col
@@ -36,13 +41,14 @@ import router from "@/router";
 import NavigationDefault from "@/layouts/default/NavigationBar";
 import YesNo from "@/components/basic/YesNo";
 import Project from "@/components/project/Project";
+import CreateProject from "@/components/project/CreateProject";
 
 export default {
   name: "ProjectList",
-  components: {Project, YesNo, NavigationDefault},
+  components: {CreateProject, Project, YesNo, NavigationDefault},
   data() {
     return {
-      overlay: false
+      overlay: false,
     }
   },
   async mounted() {
