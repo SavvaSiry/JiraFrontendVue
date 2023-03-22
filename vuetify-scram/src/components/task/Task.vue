@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import CreateTask from "@/components/CreateTask";
+import CreateTask from "@/components/task/CreateTask";
 
 export default {
   name: "Task",

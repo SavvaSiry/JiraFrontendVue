@@ -33,9 +33,9 @@
 
 <script>
 import {mapGetters} from 'vuex';
-import CreateTask from "@/components/CreateTask";
+import CreateTask from "@/components/task/CreateTask";
 import {store} from "@/store";
-import Task from "@/components/Task";
+import Task from "@/components/task/Task";
 import draggable from "vuedraggable";
 import NavigationDefault from "@/layouts/default/NavigationBar";
 

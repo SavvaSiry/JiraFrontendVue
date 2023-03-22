@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import YesNo from "@/components/YesNo";
+import YesNo from "@/components/basic/YesNo";
 import {store} from "@/store";
 
 export default {

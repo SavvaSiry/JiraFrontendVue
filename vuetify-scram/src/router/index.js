@@ -1,7 +1,7 @@
 // Composables
 import {createRouter, createWebHistory} from 'vue-router'
-import ProjectList from "@/components/ProjectList";
-import MainPage from "@/components/MainPage";
+import ProjectList from "@/components/project/ProjectList";
+import MainPage from "@/components/pages/MainPage";
 
 const routes = [
   {
@@ -28,7 +28,7 @@ const routes = [
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "home" */ '@/components/YaTest.vue'),
+        component: () => import(/* webpackChunkName: "home" */ '@/components/pages/YaTest.vue'),
       },
     ]
   },
@@ -42,7 +42,7 @@ const routes = [
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "home" */ '@/components/MainPage.vue'),
+        component: () => import(/* webpackChunkName: "home" */ '@/components/pages/MainPage.vue'),
       },
     ]
   },
@@ -53,7 +53,7 @@ const routes = [
       {
         path: '',
         props: true,
-        component: () => import(/* webpackChunkName: "home" */ '@/components/ProjectList.vue')
+        component: () => import(/* webpackChunkName: "home" */ '@/components/project/ProjectList.vue')
       }
     ]
   },
@@ -64,7 +64,7 @@ const routes = [
       {
         path: '',
         props: true,
-        component: () => import(/* webpackChunkName: "home" */ '@/components/MainPage.vue'),
+        component: () => import(/* webpackChunkName: "home" */ '@/components/pages/MainPage.vue'),
       }
     ]
   },

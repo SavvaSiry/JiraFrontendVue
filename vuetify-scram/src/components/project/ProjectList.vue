@@ -34,8 +34,8 @@ import {mapActions, mapGetters} from "vuex";
 import {store} from "@/store";
 import router from "@/router";
 import NavigationDefault from "@/layouts/default/NavigationBar";
-import YesNo from "@/components/YesNo";
-import Project from "@/components/Project";
+import YesNo from "@/components/basic/YesNo";
+import Project from "@/components/project/Project";
 
 export default {
   name: "ProjectList",
