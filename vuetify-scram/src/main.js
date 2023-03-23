@@ -9,6 +9,9 @@ import App from './App.vue'
 import axios from 'axios'
 import { store } from './store'
 
+import VueDatePicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css';
+
 // Composable
 import { createApp } from 'vue'
 
@@ -21,4 +24,5 @@ registerPlugins(app)
 
 app.use(store, axios)
 app.mount('#app')
+app.component('VueDatePicker', VueDatePicker);
 

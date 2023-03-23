@@ -166,6 +166,8 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  height: 85%;
+  max-height: 85%;
 }
 
 .my-last-column {

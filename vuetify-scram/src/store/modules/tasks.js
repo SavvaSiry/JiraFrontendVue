@@ -17,7 +17,7 @@ export default {
         deadline: "1679336656",
         description: data.description,
         project_id: data.project_id,
-        number: ctx.state.tasks.length,
+        number: 0,
         status: "TO DO",
         title: data.name,
         users: [],
@@ -37,7 +37,7 @@ export default {
           status: data.status,
           users: data.users,
           project_id: data.project_id,
-          number: data.number
+          number: 0
         })
         .then(r => {
           console.log(r)
