@@ -24,7 +24,7 @@ export default {
       })
         .then(function (response) {
           console.log((response.data))
-          ctx.dispatch('getTasks', data.id)
+          ctx.dispatch('getTasks', data.project_id)
         })
     },
     updateTask(ctx, data) {

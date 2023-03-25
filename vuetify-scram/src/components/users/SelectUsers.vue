@@ -13,7 +13,7 @@
           align="center"
           justify="start"
         >
-          <v-col
+           <v-col
             v-for="(selection, i) in selections"
             :key="selection.text"
             cols="auto"
@@ -26,7 +26,7 @@
             >
               <v-avatar start>
                 <v-img
-                  :src="selection.icon"
+                  :src="'https://avatars.mds.yandex.net/get-yapic/54535/m2YVJQvmyWxqqr2zeOlfivoZzRg-1/islands-200'"
                   :disabled="loading"
                 />
               </v-avatar>
@@ -53,7 +53,7 @@
       <v-divider v-if="!allSelected"></v-divider>
 
       <v-list>
-        <template v-for="item in categories">
+        <template v-for="item in getRoleList">
           <v-list-item
             v-if="!selected.includes(item)"
             :key="item.text"
@@ -63,13 +63,22 @@
             <template v-slot:prepend>
               <v-avatar start>
                 <v-img
-                  :src="item.icon"
+                  :src="'https://avatars.mds.yandex.net/get-yapic/54535/m2YVJQvmyWxqqr2zeOlfivoZzRg-1/islands-200'"
                   :disabled="loading"
                 />
               </v-avatar>
             </template>
 
-            <v-list-item-title v-text="item.text"></v-list-item-title>
+            <v-list-item-title v-text="item.user_id">
+            </v-list-item-title>
+
+            <dropdown class="my-dropdown-toggle"
+                      :options="arrayOfObjects"
+                      :selected="object"
+                      v-on:updateOption="methodToRunOnSelect"
+                      :placeholder="'Select an Item'"
+                      :closeOnOutsideClick="boolean">
+            </dropdown>
           </v-list-item>
         </template>
       </v-list>
@@ -94,9 +103,22 @@
 </template>
 
 <script>
+import {mapGetters} from "vuex";
+import dropdown from 'vue-dropdowns';
+
 export default {
   name: "SelectUsers",
+  components: {
+    'dropdown': dropdown,
+  },
   data: () => ({
+    arrayOfObjects: [
+      {name: 'admin'},
+      {name: 'test'},
+    ],
+    object: {
+      name: 'Object Name',
+    },
     items: [
       {
         text: 'Nature',
@@ -125,6 +147,7 @@ export default {
   }),
 
   computed: {
+    ...mapGetters(['getRoleList']),
     allSelected() {
       return this.selected.length === this.items.length
     },
@@ -166,6 +189,9 @@ export default {
         this.loading = false
       }, 2000)
     },
+    methodToRunOnSelect(payload) {
+      this.object = payload;
+    }
   },
 }
 </script>

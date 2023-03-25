@@ -60,12 +60,6 @@ export default {
     return {
       deleteOverlay: false,
       editOverlay: false,
-      items: [
-        {title: 'Click Me'},
-        {title: 'Click Me'},
-        {title: 'Click Me'},
-        {title: 'Click Me 2'},
-      ],
     }
   },
   props: {
@@ -75,6 +69,7 @@ export default {
   },
   methods: {
     seeProject(project) {
+      store.dispatch('selectProject', project.id)
       this.$router.push('/projects/' + project.id)
     },
     yes() {

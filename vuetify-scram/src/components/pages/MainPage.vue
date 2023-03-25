@@ -119,6 +119,7 @@ export default {
   },
   async mounted() {
     await store.dispatch('getTasks', this.$route.params.id)
+    await store.dispatch('getRoleList', this.$route.params.id)
   },
   methods: {
     todo: function (evt) {

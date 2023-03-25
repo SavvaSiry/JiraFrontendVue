@@ -1,17 +1,17 @@
 import tasks from './modules/tasks'
-import auth from './modules/auth'
 import project from './modules/projects'
 import ya from "./modules/ya";
-import client from "./modules/client";
+import auth from "./modules/auth";
+import role from "./modules/role";
 import {createStore} from "vuex";
 
 export const store = createStore({
   modules: {
     project,
-    auth,
+    role,
     tasks,
     ya,
-    client,
+    auth
   }
 })
 

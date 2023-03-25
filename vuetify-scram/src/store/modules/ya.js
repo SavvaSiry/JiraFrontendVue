@@ -22,7 +22,7 @@ export default {
       client.get('/info')
         .then(r => {
           console.log(r.data)
-          ctx.commit('updateInfo', r.data)
+          ctx.commit('updateInfo', r.data[0])
         }).catch(error => {
         console.log(error)
       })

@@ -66,6 +66,7 @@
 import {store} from "@/store";
 import {ref} from 'vue';
 import SelectUsers from "@/components/users/SelectUsers";
+import {mapGetters} from "vuex";
 
 export default {
   name: "CreateTask",
@@ -108,6 +109,7 @@ export default {
     this.editDescription = this.description
   },
   methods: {
+    ...mapGetters(['getSelectedProjectId']),
     submit() {
       if (this.task !== undefined) this.updateTask()
       else this.createTask()
@@ -121,13 +123,13 @@ export default {
         deadline: this.task.deadline.toString(),
         status: this.task.status,
         users: this.task.users,
-        project_id: this.$route.params.id
+        project_id: this.getSelectedProjectId()
       }
       store.dispatch('updateTask', data)
     },
     createTask() {
       let data = {
-        project_id: this.$route.params.id,
+        project_id: this.getSelectedProjectId(),
         name: this.editTitle,
         description: this.editDescription,
         number: store.state.tasks.length
@@ -140,7 +142,7 @@ export default {
       this.$emit('closeOverlay')
     },
     deleteTask() {
-      let data = {task_id: this.task.id, project_id: this.$route.params.id}
+      let data = {task_id: this.task.id, project_id: this.getSelectedProjectId()}
       store.dispatch('deleteTask', data)
       this.cleanForm()
     }

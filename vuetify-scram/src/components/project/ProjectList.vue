@@ -59,6 +59,7 @@ export default {
   },
   methods: {
     seeProject(project) {
+      store.dispatch('selectProject', project.id)
       this.$router.push('/projects/' + project.id)
     }
   }
