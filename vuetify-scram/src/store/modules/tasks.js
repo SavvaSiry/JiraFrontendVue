@@ -14,13 +14,13 @@ export default {
     createTask(ctx, data) {
       let client = getClient()
       client.post('/tasks', {
-        deadline: "1679336656",
+        deadline: data.deadline,
         description: data.description,
         project_id: data.project_id,
         number: 0,
         status: "TO DO",
-        title: data.name,
-        users: [],
+        title: data.title,
+        users: data.users,
       })
         .then(function (response) {
           console.log((response.data))

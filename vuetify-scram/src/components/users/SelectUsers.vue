@@ -5,7 +5,6 @@
       max-width="550"
       min-width="550"
     >
-
       <v-card-title>Assign performers</v-card-title>
 
       <v-container>
@@ -13,8 +12,8 @@
           align="center"
           justify="start"
         >
-           <v-col
-            v-for="(selection, i) in selections"
+          <v-col
+            v-for="(selection, i) in usersSelected"
             :key="selection.text"
             cols="auto"
             class="py-1 pe-0"
@@ -22,16 +21,16 @@
             <v-chip
               :disabled="loading"
               closable
-              @click:close="selected.splice(i, 1)"
+              @click:close="this.usersSelected.splice(i, 1)"
             >
               <v-avatar start>
                 <v-img
-                  :src="'https://avatars.mds.yandex.net/get-yapic/54535/m2YVJQvmyWxqqr2zeOlfivoZzRg-1/islands-200'"
+                  :src="'https://avatars.mds.yandex.net/get-yapic/' + selection.icon + '/islands-200'"
                   :disabled="loading"
                 />
               </v-avatar>
 
-              {{ selection.text }}
+              {{ selection.user_id }}
             </v-chip>
           </v-col>
 
@@ -53,32 +52,24 @@
       <v-divider v-if="!allSelected"></v-divider>
 
       <v-list>
-        <template v-for="item in getRoleList">
+        <template v-for="item in getRoleList" :key="item.user_id">
           <v-list-item
-            v-if="!selected.includes(item)"
-            :key="item.text"
             :disabled="loading"
-            @click="selected.push(item)"
+            @click="usersSelected.push(item)"
+            v-if="checkById(item)"
           >
             <template v-slot:prepend>
               <v-avatar start>
                 <v-img
-                  :src="'https://avatars.mds.yandex.net/get-yapic/54535/m2YVJQvmyWxqqr2zeOlfivoZzRg-1/islands-200'"
+                  :src="'https://avatars.mds.yandex.net/get-yapic/' + item.icon + '/islands-200'"
                   :disabled="loading"
                 />
               </v-avatar>
             </template>
-
-            <v-list-item-title v-text="item.user_id">
-            </v-list-item-title>
-
-            <dropdown class="my-dropdown-toggle"
-                      :options="arrayOfObjects"
-                      :selected="object"
-                      v-on:updateOption="methodToRunOnSelect"
-                      :placeholder="'Select an Item'"
-                      :closeOnOutsideClick="boolean">
-            </dropdown>
+            <div class="d-flex align-center justify-space-between">
+              <v-list-item-title v-text="item.user_id"/>
+              <v-list-item-subtitle v-text="item.role"/>
+            </div>
           </v-list-item>
         </template>
       </v-list>
@@ -89,13 +80,11 @@
         <v-spacer></v-spacer>
 
         <v-btn
-          :disabled="!selected.length"
           :loading="loading"
-          color="purple"
           variant="text"
-          @click="next"
+          @click="assignPerformers"
         >
-          Next
+          Done
         </v-btn>
       </v-card-actions>
     </v-card>
@@ -119,79 +108,34 @@ export default {
     object: {
       name: 'Object Name',
     },
-    items: [
-      {
-        text: 'Nature',
-        icon: 'https://avatars.mds.yandex.net/get-yapic/54535/m2YVJQvmyWxqqr2zeOlfivoZzRg-1/islands-200',
-      },
-      {
-        text: 'Nightlife',
-        icon: 'https://avatars.mds.yandex.net/get-yapic/54535/m2YVJQvmyWxqqr2zeOlfivoZzRg-1/islands-200',
-      },
-      {
-        text: 'November',
-        icon: 'https://avatars.mds.yandex.net/get-yapic/54535/m2YVJQvmyWxqqr2zeOlfivoZzRg-1/islands-200',
-      },
-      {
-        text: 'Portland',
-        icon: 'https://avatars.mds.yandex.net/get-yapic/54535/m2YVJQvmyWxqqr2zeOlfivoZzRg-1/islands-200',
-      },
-      {
-        text: 'Biking',
-        icon: 'https://avatars.mds.yandex.net/get-yapic/54535/m2YVJQvmyWxqqr2zeOlfivoZzRg-1/islands-200',
-      },
-    ],
     loading: false,
     search: '',
-    selected: [],
   }),
-
+  props: {
+    usersSelected: {
+      type: Array,
+      defaults: [],
+    },
+  },
   computed: {
     ...mapGetters(['getRoleList']),
     allSelected() {
-      return this.selected.length === this.items.length
-    },
-    categories() {
-      const search = this.search.toLowerCase()
-
-      if (!search) return this.items
-
-      return this.items.filter(item => {
-        const text = item.text.toLowerCase()
-
-        return text.indexOf(search) > -1
-      })
-    },
-    selections() {
-      const selections = []
-
-      for (const selection of this.selected) {
-        selections.push(selection)
-      }
-
-      return selections
+      return this.getRoleList.length === this.usersSelected.length
     },
   },
-
   watch: {
     selected() {
       this.search = ''
     },
   },
-
   methods: {
-    next() {
-      this.loading = true
-
-      setTimeout(() => {
-        this.search = ''
-        this.selected = []
-        this.loading = false
-      }, 2000)
+    assignPerformers() {
+      console.log(this.usersSelected)
+      this.$emit('close')
     },
-    methodToRunOnSelect(payload) {
-      this.object = payload;
-    }
+    checkById(item) {
+      return this.usersSelected.find((i) => i.user_id === item.user_id) === undefined
+    },
   },
 }
 </script>

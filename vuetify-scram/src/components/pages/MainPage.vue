@@ -32,6 +32,7 @@
             item-key="id"
             group="tasks"
             @change="inProgress"
+            @add="changeStatus"
           >
             <template #item="{element}">
               <Task
@@ -135,6 +136,7 @@ export default {
       if (evt.added) this.changeStatus(evt.added.element, 'DONE')
     },
     changeStatus(element, status) {
+      if (element.isTrusted !== undefined) return
       element.status = status
       store.dispatch('updateTask', element)
     }

@@ -17,25 +17,23 @@
       </v-card-text>
     </v-card>
 
-    <CreateTask
+    <EditTask
       v-model="overlay"
-      :button-title="'Внести изменения'"
-      :card-title="'Редактирование задачи'"
-      :description="task.description"
-      :title="task.title"
       :task="task"
       @closeOverlay="overlay = false"
     />
+
   </div>
 </template>
 
 <script>
 import CreateTask from "@/components/task/CreateTask";
 import {mapGetters} from "vuex";
+import EditTask from "@/components/task/EditTask";
 
 export default {
   name: "Task",
-  components: {CreateTask},
+  components: {EditTask, CreateTask},
   props: {
     task: {
       title: String,

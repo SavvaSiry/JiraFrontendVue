@@ -15,7 +15,6 @@
       <v-list-item
         v-for="item in getRoleList" :key="item.user_id"
         style="overflow: visible"
-
       >
         <template v-slot:prepend>
           <v-avatar start>
