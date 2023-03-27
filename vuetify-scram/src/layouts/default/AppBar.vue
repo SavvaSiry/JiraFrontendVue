@@ -7,7 +7,7 @@
 
       <v-overlay class="align-center d-flex flex-row justify-center" v-model="roleOverlay">
         <EditRoles
-
+          @close="roleOverlay = false"
         />
       </v-overlay>
 

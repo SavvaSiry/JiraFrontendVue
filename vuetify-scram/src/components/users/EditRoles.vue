@@ -8,6 +8,7 @@
   >
 
     <v-card-title>Manage roles in project</v-card-title>
+    <v-divider/>
 
     <v-list style="overflow: visible">
 
@@ -19,7 +20,7 @@
         <template v-slot:prepend>
           <v-avatar start>
             <v-img
-              :src="'https://avatars.mds.yandex.net/get-yapic/54535/m2YVJQvmyWxqqr2zeOlfivoZzRg-1/islands-200'"
+              :src="'https://avatars.mds.yandex.net/get-yapic/' + item.icon + '/islands-200'"
             />
           </v-avatar>
         </template>
@@ -29,8 +30,8 @@
           </v-list-item-title>
           <dropdown style="overflow: visible"
                     class="my-dropdown-toggle"
-                    :options="arrayOfObjects"
-                    :selected="object"
+                    :options="getListOptions(item)"
+                    :selected="convertToObject(item)"
                     v-on:updateOption="methodToRunOnSelect"
                     :placeholder="'Select an Item'"
                     v-click-outside="close = true"
@@ -39,12 +40,28 @@
         </div>
       </v-list-item>
     </v-list>
+
+    <v-divider/>
+
+    <v-card-actions>
+      <v-spacer></v-spacer>
+
+      <v-btn
+        variant="text"
+        @click="editRoles()"
+      >
+        Done
+      </v-btn>
+    </v-card-actions>
+
+
   </v-card>
 </template>
 
 <script>
 import {mapGetters} from "vuex";
 import dropdown from 'vue-dropdowns';
+import {store} from "@/store";
 
 export default {
   name: "EditRoles",
@@ -54,20 +71,41 @@ export default {
   },
   data() {
     return {
+      result: [],
       arrayOfObjects: [
-        {name: 'admin'},
-        {name: 'test'},
+        {name: 'Manager'},
+        {name: 'Viewer'},
+        {name: 'Performer'},
       ],
-      object: {
-        name: 'Object Name',
-      },
       close: false,
     }
   },
   methods: {
     methodToRunOnSelect(payload) {
-      this.object = payload;
-    }
+      this.result = this.result.filter((item) => item.user_id !== payload.user_id)
+      this.result.push(payload)
+    },
+    convertToObject(item) {
+      return {name: item.role}
+    },
+    getListOptions(item) {
+      let array = []
+      this.arrayOfObjects.forEach((role) => {
+        if (role.name !== item.role) array.push({
+          name: role.name,
+          user_id: item.user_id,
+          project_id: item.project_id,
+          role: role.name
+        })
+      })
+      return array
+    },
+    editRoles() {
+      this.result.forEach((item) => {
+        store.dispatch('updateRole', item)
+      })
+      this.$emit('close');
+    },
   }
 }
 </script>

@@ -44,13 +44,6 @@ export default {
     selectProject(ctx, projectId) {
       ctx.commit('selectProject', projectId)
     },
-    getRoleList(ctx, project_id) {
-      const instance = getClient()
-      instance.get("/role/" + project_id)
-        .then(r => {
-          ctx.commit('setRoles', r.data)
-        })
-    }
   },
   mutations: {
     setProjects(state, payload) {
@@ -59,15 +52,11 @@ export default {
     selectProject(state, selectedProjectId) {
       state.selectedProjectId = selectedProjectId
       console.log(state.selectedProjectId)
-    },
-    setRoles(state, payload) {
-      state.roleList = payload
     }
   },
   state: {
     projects: [],
-    selectedProjectId: '',
-    roleList: []
+    selectedProjectId: ''
   },
   getters: {
     getProjects(state) {
@@ -76,9 +65,6 @@ export default {
     },
     getSelectedProjectId(state) {
       return state.selectedProjectId
-    },
-    getRoleList(state) {
-      return state.roleList
     }
   }
 }
