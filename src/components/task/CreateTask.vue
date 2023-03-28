@@ -36,6 +36,7 @@ export default {
     createTask(data) {
       data.project_id = this.getSelectedProjectId()
       store.dispatch('createTask', data)
+      this.$emit('closeOverlay')
     },
 
   }

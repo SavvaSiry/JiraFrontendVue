@@ -49,7 +49,7 @@ export default {
       this.$emit('closeOverlay')
     },
     deleteTask() {
-      let data = {task_id: this.task.id, project_id: this.getSelectedProjectId()}
+      let data = {task_id: this.task.id, project_id: this.task.project_id}
       store.dispatch('deleteTask', data)
       this.$emit('closeOverlay')
     }

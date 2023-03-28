@@ -9,8 +9,7 @@ import '@mdi/font/css/materialdesignicons.css'
 import 'vuetify/styles'
 
 // Composables
-import { createVuetify } from 'vuetify'
-import { aliases, mdi } from 'vuetify/iconsets/mdi'
+import {createVuetify} from 'vuetify'
 
 // https://vuetifyjs.com/en/introduction/why-vuetify/#feature-guides
 export default createVuetify({
@@ -18,8 +17,8 @@ export default createVuetify({
     themes: {
       light: {
         colors: {
-          primary: '#d59d3c',
-          secondary: '#196dac',
+          primary: '#1867C0',
+          secondary: '#5CBBF6',
         },
       },
     },

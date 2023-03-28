@@ -4,7 +4,7 @@
       <v-card-title>{{ task.title }}</v-card-title>
       <v-divider/>
       <v-card-text>{{ task.description }}</v-card-text>
-      <v-card-text>
+      <v-card-text v-if="task.users.length > 0">
         <span class="me-4"><b>Performers: </b></span>
         <v-chip
           pill

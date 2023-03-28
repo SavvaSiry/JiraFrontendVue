@@ -1,5 +1,5 @@
 import axios from "axios";
-import getClient from "@/store/services/axiosClientService";
+import getClient from "@/services/axiosClientService";
 
 export default {
   actions: {
