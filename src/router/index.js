@@ -1,4 +1,4 @@
-// Composables
+// Composable
 import {createRouter, createWebHistory} from 'vue-router'
 import ProjectList from "@/components/project/ProjectList";
 import MainPage from "@/components/pages/MainPage";
