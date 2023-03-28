@@ -1,7 +1,7 @@
 version: "3.4"
 services:
   vite_docker:
-    image: node:alpine
+    build: .
     container_name: vite_docker
     entrypoint: /bin/sh
     ports:
